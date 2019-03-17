@@ -8,6 +8,7 @@ import retrofit2.http.Query
  * Created by ${KhalidToak} on 3/17/2019.
  */
 interface ApiInterface{
+    //specify the endpoint to get popular movies from
     @GET("popular")
     fun getPopularMovies(@Query("api_key") apiKey :String,
                          @Query("language") language : String,

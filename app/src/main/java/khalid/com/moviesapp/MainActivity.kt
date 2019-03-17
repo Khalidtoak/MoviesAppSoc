@@ -13,9 +13,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //use the api cliient to get the api interface
         val apiInterface = ApiClient.getRetrofit().create(ApiInterface::class.java)
+        //call the get popular movies function
         var popularMovies = apiInterface.getPopularMovies("b90d08104f6ddf9bb30c704bccac4f6a",
             "en-US", 1)
+        //handle the request and place it in a que
         popularMovies.enqueue(object : Callback<PopularMovies>{
             override fun onFailure(call: Call<PopularMovies>, t: Throwable) {
                 Toast.makeText(this@MainActivity, "Unable to connect "

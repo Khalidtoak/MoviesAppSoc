@@ -2,6 +2,8 @@ package khalid.com.moviesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-
+private lateinit var popularMovies : Call<PopularMovies>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         //use the api cliient to get the api interface
         val apiInterface = ApiClient.getRetrofit().create(ApiInterface::class.java)
         //call the get popular movies function
-        val popularMovies = apiInterface.getPopularMovies("b90d08104f6ddf9bb30c704bccac4f6a",
+          popularMovies = apiInterface.getPopularMovies("b90d08104f6ddf9bb30c704bccac4f6a",
             "en-US", 1)
         //handle response and failure of the call
         fetchMovies(popularMovies)
@@ -58,5 +60,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideProgressBar() {
         content_loading.visibility = View.INVISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item!!.itemId){
+            //when refresh button is clicked, refresh the feed
+            R.id.refresh_button -> fetchMovies(popularMovies)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

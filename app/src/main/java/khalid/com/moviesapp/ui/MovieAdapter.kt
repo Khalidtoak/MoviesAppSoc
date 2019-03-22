@@ -1,6 +1,7 @@
 package khalid.com.moviesapp.ui
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +30,22 @@ class MovieAdapter(private val context: Context,
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val result = popularMovies.results[position]
        holder.itemView.title_text.text = result.title
-        holder.itemView.description.text = result.overview
         Glide.with(context).asBitmap().load("https://image.tmdb.org/t/p/w500${result.posterPath}")
             .into(holder.itemView.display_movie)
     }
-    inner class MovieViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
+    inner class MovieViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val result = popularMovies.results[adapterPosition]
+            val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra("Title", result.title)
+                putExtra("Description", result.overview)
+                putExtra("imageUrl", "https://image.tmdb.org/t/p/w500${result.posterPath}")
+            }
+            context.startActivity(intent)
+        }
+
+    }
 }

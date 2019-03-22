@@ -20,11 +20,6 @@
                   android:textSize="20sp"
                   android:layout_margin="8dp"
                   tools:text="Movie title"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/description"
-                  tools:text="Movie title"
-        android:layout_margin="8dp"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
